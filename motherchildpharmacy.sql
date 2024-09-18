@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2024 at 10:48 PM
+-- Generation Time: Sep 18, 2024 at 05:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,17 +68,19 @@ CREATE TABLE `inventory` (
   `PricePerUnit` decimal(10,2) DEFAULT NULL,
   `SupplierID` int(11) DEFAULT NULL,
   `Notes` text DEFAULT NULL,
-  `Status` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
+  `Status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `ProductIcon` varchar(255) DEFAULT NULL,
+  `ProductCode` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`ItemID`, `ItemName`, `GenericName`, `BrandName`, `ItemType`, `Mass`, `UnitOfMeasure`, `InStock`, `Ordered`, `ReorderLevel`, `PricePerUnit`, `SupplierID`, `Notes`, `Status`) VALUES
-(1, 'Test', 'Paracetamol', 'Biogesic', 'Medicine', '100', 'mg', 0, 0, NULL, 200.00, NULL, 'hehe', ''),
-(2, 'two', 'Paracetamol', 'Biogesic', 'Medicine', '100', 'mg', 0, 0, NULL, 300.50, NULL, 'a', ''),
-(3, 'Three', 'Phenyl', 'Neozep', 'Medicine', '200', 'mg', 0, 0, NULL, 299.00, NULL, 'None', 'Active');
+INSERT INTO `inventory` (`ItemID`, `ItemName`, `GenericName`, `BrandName`, `ItemType`, `Mass`, `UnitOfMeasure`, `InStock`, `Ordered`, `ReorderLevel`, `PricePerUnit`, `SupplierID`, `Notes`, `Status`, `ProductIcon`, `ProductCode`) VALUES
+(1, 'Test', 'Paracetamol', 'Biogesic', 'Medicine', '100', 'mg', 0, 0, NULL, 200.00, NULL, 'hehe', '', NULL, NULL),
+(2, 'two', 'Paracetamol', 'Biogesic', 'Medicine', '100', 'mg', 0, 0, NULL, 300.50, NULL, 'a', '', NULL, NULL),
+(3, 'Three', 'Phenyl', 'Neozep', 'Medicine', '200', 'mg', 0, 0, NULL, 299.00, NULL, 'None', 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,7 +183,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`AccountID`, `employeeName`, `employeeLName`, `role`, `accountName`, `password`, `picture`, `dateCreated`, `status`, `connected`, `SuppliersPerms`, `TransactionsPerms`, `InventoryPerms`, `POSPerms`, `REPerms`, `POPerms`, `UsersPerms`) VALUES
-(3, 'Lance', 'Tiangco', 'Admin', 'ltiangco', 'tiangco-e003', 'dubu2.jpg', '2024-09-01 23:42:57', 'Active', '1', 'on', 'on', 'on', 'on', 'on', 'on', 'on');
+(3, 'Lance', 'Tiangco', 'Admin', 'ltiangco', 'tiangco-e003', 'dubu2.jpg', '2024-09-01 23:42:57', 'Active', '1', 'on', 'on', 'on', 'on', 'on', 'on', 'on'),
+(37, 'Robert', 'Parr', 'Pharmacy Assistant', 'rparr', 'parr-e037', 'Incredibles.png', '2024-09-18 17:24:00', 'Inactive', '0', 'off', 'on', 'off', 'on', 'on', 'off', 'off'),
+(38, 'Shrek', 'Shrek', 'Purchaser', 'sshrek', 'shrek-e038', 'Shrek.png', '2024-09-18 17:36:27', 'Active', '0', 'on', 'on', 'on', 'on', 'on', 'on', 'off');
 
 --
 -- Indexes for dumped tables
@@ -280,7 +284,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `AccountID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `AccountID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints for dumped tables
