@@ -1,8 +1,8 @@
 {
-    "employeeName": "Lance",
-    "employeeLName": "Tiangco",
-    "accountName": "ltiangco",
-    "password": "tiangco-e004",
+    "employeeName": "Sayra",
+    "employeeLName": "Jackson",
+    "accountName": "sjackson",
+    "password": "jackson-e036",
     "role": "Admin",
     "SuppliersPerms": "on",
     "TransactionsPerms": "on",

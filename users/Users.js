@@ -242,7 +242,7 @@ function updateTable(data) {
 
     data.forEach(row => {
         table.row.add([
-            `<img src="uploads/${row.picture}" alt="${row.employeeName}" class="avatar2"/> ${row.employeeName + " " + row.employeeLName}`,
+            `<img src="${row.picture}" alt="${row.employeeName}" class="avatar2"/> ${row.employeeName + " " + row.employeeLName}`,
             row.role,
             row.accountName,
             row.dateCreated,
@@ -274,7 +274,7 @@ function fetchUserDetails(accountName) {
                 accountNameEdit.value = data.accountName;
                 passwordEdit.value = data.password;
                 previewEdit.style.display = 'block';
-                previewEdit.src = "uploads/" + data.picture;
+                previewEdit.src = data.picture;
                 AccountID.value = data.AccountID;
 
                 resetPermissionsEdit();

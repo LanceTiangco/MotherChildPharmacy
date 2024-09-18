@@ -239,11 +239,15 @@ h6 {
 }
 
 .card-body {
-  padding: 0 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
 }
 
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);
+}
+
+.card-img-top {
+  padding: 5px 5px 5px 5px;
 }
 
 /* Alerts */
@@ -420,11 +424,11 @@ h6 {
   }
 }
 
-.header .search-form {
-  width: 100%;
+.search-form {
+  width: 50%;
 }
 
-.header .search-form input {
+.search-form input {
   border: 0;
   font-size: 14px;
   color: #012970;
@@ -442,7 +446,7 @@ h6 {
   border: 1px solid rgba(1, 41, 112, 0.3);
 }
 
-.header .search-form button {
+.search-form button {
   border: 0;
   padding: 0;
   margin-left: -30px;
@@ -1264,4 +1268,10 @@ h6 {
 
 .col-md-8 .form-control:not(.collapsed) .bi-chevron-down {
   transform: rotate(180deg);
+}
+
+.btn-sm-custom {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1;
 }
