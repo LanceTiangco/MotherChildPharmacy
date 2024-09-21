@@ -28,8 +28,8 @@
   <link href="../resources/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="../resources/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="../style.css" rel="stylesheet">
+  <!-- POS CSS File -->
+  <link href="pos_styles.css" rel="stylesheet">
 
 </head>
 
@@ -53,7 +53,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../users/<?php echo htmlspecialchars($picture); ?>" alt="Profile" class="rounded-circle">
+            <img src="../users/uploads/<?php echo htmlspecialchars($picture); ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo htmlspecialchars($formattedName); ?></span>
           </a><!-- End Profile Image Icon -->
 
