@@ -1,0 +1,31 @@
+         Mother & Child
+ Pharmacy and Medical Supplies
+ Gen. Luna Street, Babo Sacan,
+        Porac, Pampanga
+--------------------------------
+
+Qty Item                   Price
+3   Paracetamol           P27.00
+--------------------------------
+Total Items:                 3
+Subtotal:               P27.00
+Tax 12%:                 P3.24
+Discount:               P-0.00
+Amount Due:             P30.24
+Refund Amount:           P0.00
+Payment:                P33.00
+Change:                  P2.76
+--------------------------------
+Order No.:                  #6
+Date:      2024-11-02 08:31:54
+Payment Method:           Cash
+Status:                 Sales
+
+Staff:           Sayra Jackson
+Role:                    Admin
+                                
+  Thank you for your purchase!
+
+                                
+
+                                

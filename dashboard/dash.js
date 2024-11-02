@@ -181,4 +181,55 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(() => fetchInventoryData(currentStatus), 300000);
 });
 
-//orig
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("fetchTodaySales.php")
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector(".recent-sales tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center">No sales found for today</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Populate the table with today's sales data
+            data.forEach((sale) => {
+                // Format the date to show only time
+                const saleTime = new Date(sale.SaleDate).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Format the medicine name with details
+                const medicineDetails = `${sale.GenericName} ${sale.BrandName} ${sale.Mass}${sale.UnitOfMeasure}`;
+
+                const row = `
+                    <tr>
+                        <th scope="row"><a href="#">#${sale.InvoiceID}</a></th>
+                        <td>${saleTime}</td>
+                        <td><a href="#" class="text-primary">${medicineDetails}</a></td>
+                        <td>${sale.Quantity}</td>
+                        <td>₱${sale.NetAmount.toFixed(2)}</td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML("beforeend", row);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching sales data:", error);
+            const tableBody = document.querySelector(".recent-sales tbody");
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center">Error loading sales data</td>
+                </tr>
+            `;
+        });
+});
+
+//working
+

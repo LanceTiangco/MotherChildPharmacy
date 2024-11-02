@@ -226,7 +226,7 @@
           <div class="row">
 
             <!-- Inventory Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-6 col-md-6">
                 <div class="card info-card sales-card">
                     <div class="filter">
                         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -255,39 +255,8 @@
                 </div>
             </div>
 
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-                <div class="filter">
-                  <a id="filter-icon" class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-                    <li><a class="dropdown-item" href="#" data-period="today">Today</a></li>
-                    <li><a class="dropdown-item" href="#" data-period="month">This Month</a></li>
-                    <li><a class="dropdown-item" href="#" data-period="year">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Sales <span id="period-text">| Today</span></h5>
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 id="sales-total">₱0.00</h6>
-                      <span id="percentage-change" class="text-success small pt-1 fw-bold">0%</span> 
-                      <br><span id="change-text" class="text-muted small pt-2 ps-1">increase</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Sales Card -->
-
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-xxl-6 col-xl-12">
               <div class="card info-card customers-card">
                 <div class="filter">
                   <a id="filter-icon" class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -310,16 +279,47 @@
                     <div class="ps-3">
                       <h6 id="customer-total">0</h6>
                       <span id="customer-percentage-change" class="text-success small pt-1 fw-bold">0%</span> 
-                      <br><span id="customer-change-text" class="text-muted small pt-2 ps-1">increase</span>
+                      <span id="customer-change-text" class="text-muted small pt-2 ps-1">increase</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div><!-- End Customers Card -->
+            
+            <!-- Sales Card -->
+            <div class="col-xxl-12 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="filter">
+                  <a id="filter-icon" class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+                    <li><a class="dropdown-item" href="#" data-period="today">Today</a></li>
+                    <li><a class="dropdown-item" href="#" data-period="month">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" data-period="year">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Sales <span id="period-text">| Today</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="sales-total">₱0.00</h6>
+                      <span id="percentage-change" class="text-success small pt-1 fw-bold">0%</span> 
+                      <span id="change-text" class="text-muted small pt-2 ps-1">increase</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Sales Card -->
 
             <!-- Reports Card -->
             <div class="col-12">
-              <div class="card">
+              <div class="card" style="height: 716px;">
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -430,7 +430,7 @@
                                     data: customerValues
                                 }],
                                 chart: {
-                                    height: 350,
+                                    height: 625,
                                     type: 'line',
                                     toolbar: {
                                         show: false
@@ -491,7 +491,8 @@
                                         style: {
                                             colors: '#2eca6a'
                                         }
-                                    }
+                                    },
+                                    tickAmount: 14 // Increase this to add more horizontal grid lines
                                 }, {
                                     opposite: true,
                                     title: {
@@ -507,8 +508,14 @@
                                         style: {
                                             colors: '#ff771d'
                                         }
-                                    }
+                                    },
+                                    tickAmount: 14 // Match this number if you want symmetrical grid lines
                                 }],
+                                grid: {
+                                    show: true,
+                                    borderColor: '#e0e0e0',
+                                    strokeDashArray: 4 // Optional: use dashes for the grid lines
+                                },
                                 tooltip: {
                                     shared: true,
                                     intersect: false,
@@ -633,66 +640,29 @@
             </div>
           </div><!-- End Recent Activity -->
 
-          <!-- Recent Sales -->
+          <!-- Recent Sales Card -->
           <div class="col-12">
-            <div class="card recent-sales overflow-auto">
-
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+              <div class="card recent-sales">
+                  <div class="card-body">
+                      <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                      <div class="table-responsive" style="max-height: 500px;">
+                          <table class="table table-borderless" id="salesTable">
+                              <thead style="position: sticky; top: 0; background-color: #fff; z-index: 1;">
+                                  <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Time</th>
+                                      <th scope="col">Item</th>
+                                      <th scope="col">Qty</th>
+                                      <th scope="col">Price</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <!-- Data populated by JavaScript -->
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
               </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                <table class="table table-borderless datatable">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                      <td>$64</td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2147</a></th>
-                      <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                      <td>$47</td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2049</a></th>
-                      <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                      <td>$147</td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2644</a></th>
-                      <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                      <td>$67</td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2644</a></th>
-                      <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                      <td>$165</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-              </div>
-
-            </div>
           </div><!-- End Recent Sales -->
 
         </div><!-- End Right side columns -->
@@ -708,7 +678,7 @@
       &copy; Copyright <strong><span>Mother & Child Pharmacy and Medical Supplies</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      Designed by <a href="https://www.sti.edu/campuses-details.asp?campus_id=QU5H">STI College Angeles - BSIT4-A s.y 2024-2025 </a>
+      Designed by <a href="https://www.sti.edu/campuses-details.asp?campus_id=QU5H">STI College Angeles - BSIT4-A S.Y 2024-2025 </a>
     </div>
   </footer><!-- End Footer -->
 

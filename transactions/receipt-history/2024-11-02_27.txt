@@ -1,0 +1,33 @@
+         Mother & Child
+ Pharmacy and Medical Supplies
+ Gen. Luna Street, Babo Sacan,
+        Porac, Pampanga
+--------------------------------
+
+Qty Item                   Price
+1   Ascend Capsule        P52.75
+1   Advil Liquigel Capsule P9.47
+1   Biogesic Tablet        P4.81
+--------------------------------
+Total Items:                 3
+Subtotal:               P67.03
+Tax 12%:                 P8.04
+Discount:               P-0.00
+Amount Due:             P75.07
+Refund Amount:           P0.00
+Payment:                P70.00
+Change:                 P-5.07
+--------------------------------
+Order No.:                 #27
+Date:      2024-11-02 10:56:31
+Payment Method:           Cash
+Status:                 Sales
+
+Staff:           Sayra Jackson
+Role:                    Admin
+                                
+  Thank you for your purchase!
+
+                                
+
+                                

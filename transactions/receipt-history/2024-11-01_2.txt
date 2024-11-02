@@ -5,21 +5,24 @@
 --------------------------------
 
 Qty Item                   Price
-1   Advil Liquigel Ca...P   9.47
+1   Paracetamol            P9.00
 --------------------------------
 Total Items:                 1
-Subtotal:                P9.47
-Tax 12%:                 P1.14
+Subtotal:                P9.00
+Tax 12%:                 P1.08
 Discount:               P-0.00
-Amount Due:             P10.61
-Refund Amount:          P10.61
+Amount Due:             P10.08
+Refund Amount:           P0.00
 Payment:                P11.00
-Change:                  P0.39
+Change:                  P0.92
 --------------------------------
-Order No.:                 #12
-Date:      2024-10-22 01:31:42
-Staff:           Unknown Staff
-Status:                  Sales
+Order No.:                  #2
+Date:      2024-11-02 06:16:46
+Payment Method:           Cash
+Status:                 Sales
+
+Staff:           Sayra Jackson
+Role:                    Admin
                                 
   Thank you for your purchase!
 
