@@ -205,15 +205,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     minute: '2-digit'
                 });
 
-                // Format the medicine name with details
-                const medicineDetails = `${sale.GenericName} ${sale.BrandName} ${sale.Mass}${sale.UnitOfMeasure}`;
-
+                // Display items and quantities in separate columns
                 const row = `
                     <tr>
                         <th scope="row"><a href="#">#${sale.InvoiceID}</a></th>
                         <td>${saleTime}</td>
-                        <td><a href="#" class="text-primary">${medicineDetails}</a></td>
-                        <td>${sale.Quantity}</td>
+                        <td><a href="#" class="text-primary">${sale.Items}</a></td>
+                        <td>${sale.Quantities}</td>
                         <td>₱${sale.NetAmount.toFixed(2)}</td>
                     </tr>
                 `;
@@ -230,6 +228,3 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         });
 });
-
-//working
-
