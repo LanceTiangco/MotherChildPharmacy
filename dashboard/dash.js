@@ -228,3 +228,53 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("fetchDeliveries.php")
+        .then(response => response.json())
+        .then(data => {
+            const activityContent = document.getElementById("activity-content");
+            activityContent.innerHTML = ""; // Clear existing content
+
+            if (data.length > 0) {
+                data.forEach(delivery => {
+                    // Set color based on status
+                    let statusColor;
+                    switch (delivery.Status) {
+                        case 'Delivered':
+                            statusColor = "text-success"; // Green
+                            break;
+                        case 'Pending':
+                            statusColor = "text-warning"; // Yellow
+                            break;
+                        case 'Cancelled':
+                            statusColor = "text-danger"; // Red
+                            break;
+                        default:
+                            statusColor = "text-muted"; // Gray for unknown status
+                    }
+
+                    // Format OrderDate for display
+                    const orderDate = new Date(delivery.OrderDate);
+                    const timeLabel = orderDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    // Create the HTML for each delivery item
+                    const activityItem = document.createElement("div");
+                    activityItem.classList.add("activity-item", "d-flex");
+
+                    activityItem.innerHTML = `
+                        <div class="activite-label">${timeLabel}</div>
+                        <i class="bi bi-circle-fill activity-badge ${statusColor} align-self-start"></i>
+                        <div class="activity-content">
+                            Order #${delivery.PurchaseOrderID} - <span class="fw-bold">${delivery.Status}</span>
+                        </div>
+                    `;
+
+                    activityContent.appendChild(activityItem);
+                });
+            } else {
+                activityContent.innerHTML = "<p>No deliveries to display.</p>";
+            }
+        })
+        .catch(error => console.error("Error fetching deliveries data:", error));
+});
