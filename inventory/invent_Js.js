@@ -192,7 +192,6 @@ document.getElementById('PurchaseForm').addEventListener('submit', function(even
 
 
 
-
 // Function to load form data for editing
 function loadFormForEdit(item) {
     isEditMode = true; // Set to edit mode
@@ -368,9 +367,9 @@ function setDataTables() {
         "columnDefs": [
             { "targets": 0, "width": "5%" }, // Item ID
             { "targets": 1, "width": "10%", "orderable": false }, // Icon 
-            { "targets": 2, "width": "10%" }, // Generic Name
-            { "targets": 3, "width": "10%" }, // Brand Name
-            { "targets": 4, "width": "10%" }, // Item Type
+            { "targets": 2, "width": "10%", "orderable": false }, // Generic Name
+            { "targets": 3, "width": "10%", "orderable": false }, // Brand Name
+            { "targets": 4, "width": "10%", "orderable": false }, // Item Type
             { "targets": 5, "width": "5%" }, // Mass & Unit of Measure
             { "targets": 6, "width": "10%" }, // Price Per Unit
             { "targets": 7, "width": "10%" }, // InStock
@@ -565,149 +564,209 @@ function truncateText(text, maxLength) {
 
 // Function to check low stock items
 
+// Function to fetch low stock items via AJAX
+
 function checkLowStock() {
     $.ajax({
         url: 'checkLowStock.php',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
-            // Handle any server-side errors
-            if (data.error) {
-                console.error("Error: " + data.error);
-                displayMessage('Error retrieving low stock items.');
-                return;
-            }
-
             const lowStockItemsBody = document.getElementById('lowStockItemsBody');
             lowStockItemsBody.innerHTML = ''; // Clear previous items
 
-            // Populate low stock items into the modal
+            // Always open the modal
+            
+
+            if (data.error) {
+                console.error("Error: " + data.error);
+                lowStockItemsBody.innerHTML = `<tr><td colspan="5">Error retrieving low stock items.</td></tr>`;
+                return;
+            }
+
+            // Populate low stock items or show "sufficient stock" message
             if (data.length > 0) {
+                let hasLowStockItems = false;
+
                 data.forEach(item => {
                     const inStock = parseInt(item.InStock, 10);
                     const ordered = parseInt(item.Ordered, 10);
-                    const reorderLevel = parseInt(item.ReorderLevel, 10) || (ordered * 0.5); // Use existing reorder level or set to 50% of ordered amount if not set
+                    const reorderLevel = parseInt(item.ReorderLevel, 10) || (ordered * 0.5);
 
-                    // Calculate EOQ if there's enough sales data
                     let eoq = 0;
                     if (ordered > 0) {
-                        const demand = ordered; // This is the demand (units sold) for simplicity
-                        const orderingCost = 50; // Example ordering cost per order (you can adjust this value)
-                        const holdingCost = 2; // Example holding cost per unit per period (you can adjust this value)
-
-                        // EOQ formula: EOQ = sqrt((2 * Demand * Ordering Cost) / Holding Cost)
+                        const demand = ordered;
+                        const orderingCost = 50;
+                        const holdingCost = 2;
                         eoq = Math.sqrt((2 * demand * orderingCost) / holdingCost).toFixed(2);
                     }
 
-                    // Check if item is low in stock compared to reorder level
                     if (inStock <= reorderLevel) {
+                        hasLowStockItems = true;
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td class="table-row">${truncateText(item.BrandName, 20)}</td>
-                            <td class="table-row">${truncateText(item.GenericName, 20)}</td>
-                            <td class="table-row low-stock">${inStock}</td>
-                            <td class="table-row">${ordered}</td>
-                            <td class="table-row">${eoq}</td> <!-- Display calculated EOQ -->
+
+                        <td class="table-row" style="padding-left: 10px; padding-bottom: 5px;">${truncateText(item.BrandName, 20)}</td>
+                        <td class="table-row" style="padding-left: 10px; padding-bottom: 5px;">${truncateText(item.GenericName, 20)}</td>
+                        <td class="table-row low-stock" style="padding-bottom: 5px; padding-left: 20px;">${inStock}</td>
+                        <td class="table-row" style="padding-bottom: 5px; padding-left: 20px;">${ordered}</td>
+                        <td class="table-row" style="padding-bottom: 5px padding-left: 20px;">${eoq}</td>
+
                         `;
                         lowStockItemsBody.appendChild(row);
                     }
                 });
 
-                // Open the modal if there are low stock items
-                if (lowStockItemsBody.children.length > 0) {
-                    openModal(); // Open the modal to display the low stock items
-                } else {
-                    displayMessage('All items are sufficiently stocked.'); // Show message if no low stock items
+                // If no low stock items, show a message
+                if (!hasLowStockItems) {
+                    lowStockItemsBody.innerHTML = `<tr><td colspan="5">All items are sufficiently stocked.</td></tr>`;
                 }
             } else {
-                displayMessage('All items are sufficiently stocked.'); // Show message if no data returned
+                lowStockItemsBody.innerHTML = `<tr><td colspan="5">All items are sufficiently stocked.</td></tr>`;
             }
         },
         error: function(xhr, status, error) {
             console.error("AJAX Error: " + error);
-            displayMessage('Error connecting to server.'); // Show error message
+            const lowStockItemsBody = document.getElementById('lowStockItemsBody');
+            lowStockItemsBody.innerHTML = `<tr><td colspan="5">Error connecting to server.</td></tr>`;
+            openModal(); // Ensure the modal opens even on error
+        }
+    });
+}
+
+function checkNearExpiry() {
+    $.ajax({
+        url: 'checkNearExpiry.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const lowStockItemsBody = document.getElementById('lowStockItemsBody');
+            lowStockItemsBody.innerHTML = ''; // Clear previous items
+
+
+
+            // Check for errors in the response
+            if (data.error) {
+                console.error("Error: " + data.error);
+                lowStockItemsBody.innerHTML = `<tr><td colspan="3">Error retrieving near expiry items.</td></tr>`;
+                return;
+            }
+
+            // Populate near expiry items
+            if (data.length > 0) {
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="table-row" style="padding-left: 10px">${truncateText(item.BrandName, 20)}</td>
+                        <td class="table-row" style="padding-left: 20px;">${truncateText(item.GenericName, 20)}</td>
+                        <td class="table-row" style="padding-left: 10px;">${item.ExpiryDate}</td>
+                    `;
+                    lowStockItemsBody.appendChild(row);
+                });
+            } else {
+                lowStockItemsBody.innerHTML = `<tr><td colspan="3">No items nearing expiry.</td></tr>`;
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error: " + error);
+            const lowStockItemsBody = document.getElementById('lowStockItemsBody');
+            lowStockItemsBody.innerHTML = `<tr><td colspan="3">Error connecting to server.</td></tr>`;
+            openModal(); // Ensure the modal opens even on error
         }
     });
 }
 
 
 
+// END OF EOQ
 
-// Function to open the modal
-function openModal() {
-    document.getElementById('lowStockModal').style.display = 'block';
+
+// START OF TABLE OF LOW STOCK AND EXPIRY 
+
+// Function to update table view based on the dropdown selection
+
+
+function updateTableView() {
+    const selectedView = document.getElementById("modalSelect").value;
+    const tableHeader = document.getElementById("tableHeader");
+    const tableBody = document.getElementById("lowStockItemsBody");
+
+    // Clear the existing table headers and rows
+    tableHeader.innerHTML = "";
+    tableBody.innerHTML = "";
+
+    if (selectedView === "lowStock") {
+        // Set headers for Low Stock Items view
+        tableHeader.innerHTML = `
+            <th style="text-align: left; padding: 8px;">Brand Name</th>
+            <th style="text-align: left; padding: 8px;">Generic Name</th>
+            <th style="text-align: left; padding: 8px;">In Stock</th>
+            <th>Ordered</th>
+            <th>EOQ</th>
+        `;
+
+        // Populate table with low stock data via AJAX
+        checkLowStock(); 
+        
+    } else if (selectedView === "nearExpiry") {
+        // Set headers for Near Expiry Items view
+        tableHeader.innerHTML = `
+            <th style="text-align: left; padding: 8px;">Brand Name</th>
+            <th style="text-align: left; padding: 8px;">Generic Name</th>
+            <th style="text-align: left; padding: 8px;">Expiry Date</th>
+        `;
+
+        // Populate table with near expiry data
+        checkNearExpiry();
+    }
 }
 
-// Function to close the modal
-function closeModal() {
-    document.getElementById('lowStockModal').style.display = 'none';
-}
 
-// Add event listener to the button to check low stock
-document.getElementById('checkLowStockButton').addEventListener('click', function() {
-    console.log('Check Low Stock Button Clicked'); // Log button click for debugging
-    checkLowStock(); // Call the function to check low stock
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Open modal button event listener
+    const openModalButton = document.getElementById('checkLowStockButton');
+    if (openModalButton) {
+        openModalButton.addEventListener('click', openModal);
+    }
+
+    // Close modal button event listener
+    const closeButton = document.getElementById('BtnCloseLowStock');
+    if (closeButton) {
+        closeButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent propagation to parent elements
+            console.log('Close button clicked'); // Debugging log
+            closeModal();
+        });
+    }
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('lowStockModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
 });
 
-// Get the <span> element that closes the modal
-const closeModalButton = document.getElementsByClassName("closeAlert")[0];
-
-// When the user clicks on <span> (x), close the modal
-closeModalButton.onclick = function() {
-    closeModal();
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    const modal = document.getElementById('lowStockModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-}
-
-// Function to display messages
-function displayMessage(message) {
-    alert(message); // Can be customized to show messages in a different way
-}
-
-// Modal handling functions
+// Open modal function
+// Open modal function
 function openModal() {
-    document.getElementById('lowStockModal').style.display = 'block';
+    const modal = document.getElementById('lowStockModal');
+    modal.style.display = 'block'; // Show modal
+    updateTableView();
 }
 
+
+// Close modal function
 function closeModal() {
-    document.getElementById('lowStockModal').style.display = 'none';
-}
-
-
-window.onclick = function(event) {
     const modal = document.getElementById('lowStockModal');
-    if (event.target === modal) {
-        closeModal();
-    }
+    modal.style.display = 'none'; // Hide modal
 }
-
-// Function to open the low stock modal
-function openLowStockModal() {
-    document.getElementById('lowStockModal').style.display = 'block';
-}
-
-// Function to close the low stock modal
-function closeLowStockModal() {
-    document.getElementById('lowStockModal').style.display = 'none';
-}
-
-// Event listener for closing the modal when the close button is clicked
-document.querySelector('.closeAlert').addEventListener('click', closeLowStockModal);
-
-// Event listener for closing the modal when clicking outside the modal content
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('lowStockModal');
-    if (event.target === modal) {
-        closeLowStockModal();
-    }
-});
-
 
 
 ////////////////////////////////////////
@@ -729,7 +788,7 @@ window.addEventListener('click', function(event) {
 function closeEditOverlay() {
     const form = document.getElementById('userFormEdit'); // Use the actual ID of your form
     if (form) {
-        form.reset(); // Reset all form fields
+        form.reset(); // Reset all form fieldss
     }
 
     const overlay = document.getElementById('overlayEdit1'); // Use the actual ID of your overlay

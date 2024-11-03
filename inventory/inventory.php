@@ -138,9 +138,9 @@
       <li class="nav-item">
             <a class="nav-link collapsed" href="../delivery/delivery.php">
                 <i class="bi bi-truck"></i>
-                <span>Deliveries</span>
+                <span>Delivery</span>
             </a>
-        </li><!-- End Deliveries Page Nav -->
+        </li><!-- End Delivery Page Nav -->
 
 
       <li class="nav-item"></li>
@@ -229,7 +229,7 @@
           </div>
 
           <div class="button" id="GoodsIssueBtn">
-              <img src="../resources/img/ALERT.png" alt="Goods Issue">
+              <img src="../resources/img/Goods_Issue.png" alt="Goods Issue">
               Goods Issue
           </div>
 
@@ -274,6 +274,7 @@
             
             <!--<input type="text" id="pricePerUnit" name="pricePerUnit" placeholder="₱" onfocus="addPesoSign()" oninput="addPesoSign()" /> -->
             <input type="number" id="pricePerUnit" name="pricePerUnit" placeholder="₱ " onfocus="addPesoSign()" oninput="updatePrice()" />
+            
           </div>
 
           <div class="textbox">
@@ -306,6 +307,7 @@
             <!--<input type="text" id="unitOfMeasure" name="unitOfMeasure">-->
             <select style="margin-right: 35px;" class="unitOfMeasure" id="unitOfMeasure" name="unitOfMeasure">
               <option value=""></option>
+              <option value="pc">pcs</option>
               <option value="kg">kg</option>
               <option value="g">g</option>
               <option value="Mg">Mg</option>
@@ -315,7 +317,7 @@
               <option value="mL">mL</option>
               <option value="mol">mol</option>
               <option value="	mmol">mmol</option>
-              <option value="pc">pc</option>
+              
             </select>
 
             <select name="VAT_exempted" id="VAT_exempted" onchange="updateValue()">
@@ -452,31 +454,34 @@
                   </div>
               </div>
 
-              <!-- LOW STOCK MODAL -->
               <div id="lowStockModal" class="modal" role="dialog" aria-modal="true">
-                  <div class="modal-content">
-                      <span class="closeAlert">&times;</span>
-                      <h2 style="text-align: left;">Low Stock Items</h2>
-                      <hr>
-                      <div id="lowStockMessage" style="margin-top: 10px; overflow-y: auto; max-height: 300px;">
-                          <table style="width: 100%; border-collapse: collapse;">
-                              <thead>
-                                  <tr style="background-color: #f2f2f2;">
-                                      <th style="text-align: left; padding: 8px;">Brand Name</th>
-                                      <th style="text-align: left; padding: 8px;">Generic Name</th>
-                                      <th style="text-align: left; padding: 8px;">In Stock</th>
-                                      <th style="text-align: left; padding: 8px;">Ordered</th>
-                                      <th style="text-align: left; padding: 8px;">EOQ</th> <!-- New column for EOQ -->
-                                  </tr>
-                              </thead>
-                              <tbody id="lowStockItemsBody">
-                                  <!-- Low stock items will be appended here -->
-                              </tbody>
-                          </table>
-                      </div>
-                      <hr>
-                  </div>
-              </div>
+                    <div class="modal-content" style="position: relative;"> <!-- Ensure this has position: relative -->
+                        <span id="BtnCloseLowStock" 
+                              class="closeAlert" 
+                              style="position: absolute; top: 10px; right: 0; font-size: 24px; cursor: pointer; margin-right: 20px">&times;</span> <!-- Set right to 0 -->
+
+                        <!-- Dropdown to choose between Low Stock and Near Expiry -->
+                        <select id="modalSelect" onchange="updateTableView()">
+                            <option value="lowStock">Low Stock Items</option>
+                            <option value="nearExpiry">Near Expiry Items</option>
+                        </select>
+                        
+                        <hr>
+                        <div id="lowStockMessage" style="margin-top: 10px; overflow-y: auto; max-height: 300px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #f2f2f2; text-align: left; font-size: 12px;" id="tableHeader">
+                                        <!-- Table headers will be set dynamically based on selected view -->
+                                    </tr>
+                                </thead>
+                                <tbody id="lowStockItemsBody">
+                                    <!-- Low stock or near expiry items will be appended here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
 
 
 
