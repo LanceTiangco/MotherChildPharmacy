@@ -52,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $InStock = $_POST['InStock'] ?? '';
     $Discount = $_POST['Discount'] ?? '';
 
-    // Remove the peso sign and trim whitespace
-    $pricePerUnit = floatval(str_replace(['₱', ' '], '', $pricePerUnit)); // Ensure we convert to float
+     // Remove the peso sign and trim whitespace
+     $pricePerUnit = floatval(str_replace(['₱', ' '], '', $pricePerUnit)); // Ensure we convert to float
 
     // Check if pricePerUnit is a valid number
     if ($pricePerUnit <= 0) {
