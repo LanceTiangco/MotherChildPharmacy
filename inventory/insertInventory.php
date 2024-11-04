@@ -56,12 +56,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mass = preg_replace('/[^\d.]/', '', $mass); // Remove non-numeric characters except for the decimal point
     $pricePerUnit = preg_replace('/[^\d.]/', '', $pricePerUnit); // Remove non-numeric characters except for the decimal point
 
-    // Validate numeric fields
-    if (!is_numeric($mass) || !is_numeric($pricePerUnit)) {
-        echo json_encode(['success' => false, 'message' => 'Mass and PricePerUnit must be numeric']);
-        exit;
-    }
+ // Validate numeric fields
+if (!is_numeric($mass)) {
+    echo json_encode(['success' => false, 'message' => 'Mass must be numeric']);
+    exit;
+}
 
+if (!is_numeric($pricePerUnit)) {
+    echo json_encode(['success' => false, 'message' => 'PricePerUnit must be numeric']);
+    exit;
+}
     // Set InStock to 0 if empty (default value)
     if (empty($InStock)) {
         $InStock = 0; // Default value if InStock is not provided
