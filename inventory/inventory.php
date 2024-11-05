@@ -531,16 +531,14 @@
                 </div>
 
                 <div class="textbox" style="margin-bottom: 10px;">
-                <div> <!-- Wrap for product selection -->
-                    <input type="text" id="selectProd" name="selectProd" placeholder="Search Product..." oninput="filterOptions()" autocomplete="off" > <!-- Set desired width -->
-                    <div class="custom-dropdown">
-                        <div id="productSelect" class="dropdown-content" style="display: none;">
-                            <div class="option" onclick="selectProduct(this)" data-value="">Select a product</div>
-                            <!-- Options will be dynamically populated here -->
-                        </div>
-                    </div>
-                </div>
-                </div>
+                  <input type="text" id="selectProd" name="selectProd" placeholder="Search Product..." oninput="filterOptions()" onclick="showProductDropdown()" autocomplete="off">
+                  <div class="custom-dropdown">
+                      <div id="productSelect" class="dropdown-content" style="display: none;">
+                          <div class="option" onclick="selectProduct(this)" data-value="">Select a product</div>
+                          <!-- Options will be dynamically populated here -->
+                      </div>
+                  </div>
+              </div>
                                
                 <div class="textbox" style="margin-bottom: 10px;">
                           <label class="label" for="selectProd">Lot No.</label>
@@ -548,7 +546,7 @@
                 
                 <div class="textbox" style="margin-bottom: 10px;">
  
-                <input type="text" id="selectLot" name="selectLot" placeholder="Search Lot Number..." oninput="filterLotOptions()" autocomplete="off" disabled> <!-- Initially disabled -->
+                <input type="text" id="selectLot" name="selectLot" placeholder="Search Lot Number..." oninput="filterLotOptions()" onclick="showLotDropdown()" autocomplete="off" disabled>
                   <div class="custom-dropdown">
                       <div id="lotSelect" class="dropdown-content" style="display: none;">
                           <div class="option" onclick="selectLot(this)" data-value="">Select a Lot Number</div>
