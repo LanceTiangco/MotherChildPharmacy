@@ -1,2 +1,2 @@
 # Mother and Child Pharmacy
- 
+• Development of a customized inventory and POS system using HTML5, PHP, and JavaScript (Visual Studio Code and XAMPP), enabling a pharmacy to transition from traditional paper-based processes to an efficient digital workflow. Included modules that processed sales transactions for customers, reports that assisted the administration with regard to their inventory, and an automated low-stock alert that is triggered when a certain product reaches its reorder level.
